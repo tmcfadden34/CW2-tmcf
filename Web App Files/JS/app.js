@@ -241,11 +241,11 @@ function editUser(userID) {
 function userLogin(){
 
   var loginInfo = {
-    username: $('username').val(),
-    password: $('password').val()
+    username: $('#username').val(),
+    password: $('#password').val()
   }
 
-  siteAccess = "https://prod-80.eastus.logic.azure.com:443/workflows/6640491629984579ab252bfc0f67b800/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4WF8BPqvfcxcGLKJnXM2US37qg7i8QAOGU06RVsFt8I"
+  siteAccess = "https://prod-80.eastus.logic.azure.com:443/workflows/6640491629984579ab252bfc0f67b800/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4WF8BPqvfcxcGLKJnXM2US37qg7i8QAOGU06RVsFt8I";
 
   $.ajax ({
     url: siteAccess,
