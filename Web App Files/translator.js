@@ -1,7 +1,9 @@
 // translator.js
 
+const key = process.env.TRANSLATION_API_KEY || "a1e5ae42f0474b3ba9f21184b43a80ec";
+
 function translateText() {
-    const key = "a1e5ae42f0474b3ba9f21184b43a80ec";
+    const key = "";
     const endpoint = "https://api.cognitive.microsofttranslator.com/";
     const location = "eastus";
     const path = '/translate';
