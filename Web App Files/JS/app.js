@@ -174,7 +174,7 @@ function submitNewUser(){
     data: subObj,
     contentType: 'application/json; charset=utf-8'
   }).done(function (response) {
-    getUserList();
+    getUsersList();
   });
 }
 
@@ -257,12 +257,13 @@ function userLogin(){
     success: function(data){
       // Handle success as needed
       console.log('Login successful', data);
-      window.location.href = "file:///C:/Users/tmcfa/OneDrive%20-%20Ulster%20University/Ulster%20Univeristy/Year%204/Semester%201/Cloud%20Native%20Development/Assessment/Cloud%20Assessment%202/Web%20App%20Files/index.html";
+      window.location.href = "index.html";
       alert("Login was successful")
     },
     error: function(xhr, status, error) {
       // Handle error as needed
       console.log('Login failed', error);
+      alert("Login Failed")
     }
 
   })
