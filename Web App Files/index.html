@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
 
-    <title>Asset Track</title>
+    <title>Dashboard</title>
 
       <link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css">
       <script type="text/javascript" src="JS/bootstrap.js"></script>
@@ -23,7 +23,7 @@
             <div class="col-2"  ></div>
 
             <div class="col-8" style="text-align: center;">
-              <h3>Image Share</h3>
+              <h3>Image Sharing Platform</h3>
             </div>
 
             <div class="col-2"  ></div>
@@ -61,6 +61,7 @@
                 
               </form>
             </div>
+            
 
             <div class="col-2"  ></div>
         </div>
@@ -87,7 +88,116 @@
 
     </div>
 
+    <div  class="container">
+
+      <!--Header-->
+      <div class="row align-items-start">
+          <div class="col-2"  ></div>
+
+          <div class="col-8" style="text-align: center;">
+            <h3>User Tracker</h3>
+          </div>
+
+          <div class="col-2"  ></div>
+      </div>
+
+      <!--New Asset Box-->
+      <div class="row align-items-start">
+          <div class="col-2"  ></div>
+
+          <div class="col-8" style="text-align: left;border-bottom:1px solid #222222;">
+            <p>Add User</p>
+
+            <form style="font-size: 10pt;" id="newAssetForm">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name">
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email">
+              </div>
+
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username">
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="text" class="form-control" id="password">
+              </div>
+          
+              <button type="button" id="subNewUser" class="btn btn-primary">Submit</button> <br/><br/>
+              
+            </form>
+          </div>
+
+          <div class="col-2"  ></div>
+      </div>
+
+      <!-- view Asset Area-->
+      <div class="row align-items-start">
+          <div class="col-2"  ></div>
+
+          <div class="col-8" style="text-align: left;" >
+            <div style="padding:5px;">
+              <button  id = "retUsers" type="button" class="btn btn-primary">View Users</button>
+            </div>
+
+            <div id="UserList">
+
+              <h4>Please click the view Users button if you wish to view users on the system.</h4>
+
+            </div>
+          </div>
+
+          <div class="col-2"  ></div>
+      </div>
+
+       
+    </div>
+
+    <div  class="container">
+
+      <!--Header-->
+      <div class="row align-items-start">
+          <div class="col-2"  ></div>
+
+          <div class="col-8" style="text-align: center;">
+            <h3>Translator</h3>
+          </div>
+
+          <div class="col-2"  ></div>
+      </div>
+      <!--New Asset Box-->
+      <div class="row align-items-start">
+
+        <div class="col-2"></div>
     
+        <div class="col-8" style="text-align: left; border-bottom:1px solid #222222;">
+            <p>Translate Box</p>
+    
+            <form style="font-size: 10pt;">
+                <div class="mb-3">
+                    <label for="textToTranslate" class="form-label">Enter the text below you want to translate</label>
+                    <input type="text" class="form-control" id="textToTranslate">
+                </div>
+    
+                <button type="button" class="btn btn-primary" onclick="translateText()">Translate text</button> <br/><br/>
+                <div id="translationResult"></div>
+              
+                <script src="translator.js"></script>
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            </form>
+            
+            
+        </div>
+    
+        <div class="col-2"></div>
+    </div>      
+    </div>
   
   </body>
 </html>
