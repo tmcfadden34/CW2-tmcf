@@ -1,13 +1,13 @@
-//The URIs of the REST endpoint
+//The URIs of the REST endpoints related to media
 postMedia = "https://prod-49.eastus.logic.azure.com:443/workflows/97bc92545d164828b97c1a651ffb4f24/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=15ykK8nnyR9Z-COoaPcdfXqWcbSTJ42YrFadHfu36kw";
 retrieveAllMedia = "https://prod-00.eastus.logic.azure.com:443/workflows/437e21f4a81343ad8b0e48996796e105/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Tb5O5yYfT0JGAkCLOp-5uEN3viGZe-iq1Xpk7ZPo9_0";
-removeMedia0 = "https://prod-03.eastus.logic.azure.com/workflows/43f5e508cf50474f8e0ce80c18821e6e/triggers/manual/paths/invoke/api/v1/media/";
+removeMedia0 = "https://prod-03.eastus.logic.azure.com/workflows/43f5e508cf50474f8e0ce80c18821e6e/triggers/manual/paths/invoke/rest/v1/media/";
 removeMedia1 = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HwnyShAkBW7qAtZIjfXc2KJKlPVgW91BkpHLGbiOgzg";
 updateMedia0 = "https://prod-83.eastus.logic.azure.com/workflows/b8788bc0331d467bb863762a94a66efc/triggers/manual/paths/invoke/api/v1/media/{id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OfCJAqUbVvkxmpt_48JHD3ejPTj7DaEOhWQXsLGYUOg";
 updateMedia1 = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OfCJAqUbVvkxmpt_48JHD3ejPTj7DaEOhWQXsLGYUOg"
 BLOB_ACCOUNT = "https://blobstoragetmcf.blob.core.windows.net";
 
-//The URIs of the REST endpoint
+//The URIs of the REST endpoint relating to users
 retrieveAllUsers = "https://prod-24.eastus.logic.azure.com/workflows/7bd5d6501e70475cadda15c20ee953e9/triggers/manual/paths/invoke/rest/v1/users?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=I79IMg-llIS5JkoEKAl600Z6W2SjRYkHz7MZfs4MdSU";
 postNewUser = "https://prod-80.eastus.logic.azure.com/workflows/53f2aadc0c8c463fad10bfb1ad3931eb/triggers/manual/paths/invoke/rest/v1/assests?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cgvhF3ATNz3qzSQ59Kcm-Pmyp_6C_78dmJaRB2RkHag";
 updateUser0 = "https://prod-59.eastus.logic.azure.com/workflows/bdcd99b44fcb4d4b98259161ac7f1ad6/triggers/manual/paths/invoke/rest/v1/users/";
@@ -18,13 +18,12 @@ siteAccess = "https://prod-80.eastus.logic.azure.com:443/workflows/6640491629984
 
 
 
-//Handlers for media button clicks
+//Handlers for media functions called by id in html running an onClick() function
 $(document).ready(function() {
 
  
   $("#retMedias").click(function(){
 
-      //Run the get asset list function
     getMedia();
 
   }); 
@@ -32,14 +31,12 @@ $(document).ready(function() {
    //Handler for the new asset submission button
   $("#subNewForm").click(function(){
 
-    //Execute the submit new asset function
     submitNewAsset();
     
   }); 
 
   $("#delMedia").click(function(){
 
-    //Execute the delet asset function
     deleteMedia();
     
   });
@@ -54,18 +51,18 @@ $(document).ready(function() {
 
 });
 
-//A function to submit a new asset to the REST endpoint 
+//A function to submit a new media to the REST endpoint 
 function submitNewAsset(){
 
   
- submitData = new FormData();                               //Create a form data object
+ submitData = new FormData();                               //Creates the form data object
  
- submitData.append('FileName', $('#FileName').val());       //Get form variables and append them to the form data object
+ submitData.append('FileName', $('#FileName').val());       //Get the form variables and appends them to the form data object created
  submitData.append('userID', $('#userID').val());
  submitData.append('userName', $('#userName').val());
  submitData.append('File', $("#UpFile")[0].files[0]);
 
- //Post the form data to the endpoint, note the need to set the content type header
+  //Post the form data to the endpoint
   $.ajax({
   url: postMedia,
   data: submitData,
@@ -74,12 +71,12 @@ function submitNewAsset(){
   contentType: false,
   processData: false,
   type: 'POST',
-  success: function(data){
+  success: function(data){                                //success messages to user and console when added successfully
     console.log('Adding media was successful!', data);
     alert('Adding media was successful!'),
     getMedia();
   },
-  error: function(xhr, status, error) {
+  error: function(xhr, status, error) {                   //error messages to user and console when added successfully
     console.log('Adding media was unsuccessful', error);
     alert('Adding media was unsuccessful');
   }, 
@@ -88,16 +85,16 @@ function submitNewAsset(){
 }
 
 
-//A function to get a list of all the assets and write them to the Div with the AssetList Div
+//A function to get a list of all the media from adding to the media list
 function getMedia(){
  
  $('#MediaList').html('<div class="spinner-border" role="status"><span class="sr-only">&nbsp;</span>'); //Replace the current HTML in that div with a loading message
    
  $.getJSON(retrieveAllMedia, function( data ) {
   
-  var items = [];             //Create an array to hold all the retrieved assets
+  var items = [];             //Create an array to hold all the media
  
-  //Iterate through the returned records and build HTML, incorporating the key values of the
+  //Iterate through the returned records and build HTML, incorporating the key values of the media
     $.each( data, function( key, val ) {
       items.push( "<hr />");
       items.push("<img src='"+ BLOB_ACCOUNT + val["filePath"] +"' width='400'/><br/>");
@@ -106,28 +103,28 @@ function getMedia(){
       items.push( '<button type="button" class="btn btn-danger" onclick="deleteMedia('+val["id"]+')">Delete</button>  <br/><br/>');
       items.push( '<button type="button" class="btn btn-warning" onclick="editMedia('+val["id"]+')">Edit</button>  <br/><br/>');
       items.push( "<hr />");
-      
+      //pushes information to the user 
     });
 
     
-    $('#MediaList').empty();       //Clear the assetlist div
+    $('#MediaList').empty();       //Clears th media list div
   
     $("<ul/>", {
     "class": "my-new-list",
     html: items.join( "" )
-    }).appendTo( "#MediaList" );
+    }).appendTo( "#MediaList" );  //creates a new list, populates the list with media data and appends it to the media list
   });
 }
 
 
-function deleteMedia() {
-  $.ajax({
-    url: removeMedia0 + id + removeMedia1,
-    type: 'DELETE',
-  }).done(function(msg) {
+function deleteMedia(id) {
+  $.ajax({                                  //construction to make a request to the http request
+    url: removeMedia0 + id + removeMedia1,  //url construction
+    type: 'DELETE',                         //type of callback
+  }).done(function(msg) {                   
     getMedia();
   });
-}
+} //deletes the media
 
 function editMedia(id){
   var updatedMediaInfo = {
@@ -192,7 +189,7 @@ $(document).ready(function() {
 
   $("#translate").click(function(){
 
-    translateText();
+    textTranslation();
   })
 
 });
@@ -317,57 +314,48 @@ function userLogin(){
   })
 }
 
-// function translateText() {
-//   const key = "a1e5ae42f0474b3ba9f21184b43a80ec";
-//   const endpoint = "https://api.cognitive.microsofttranslator.com/";
-//   const location = "eastus";
-//   const path = '/translate';
-//   const constructedUrl = endpoint + path;
+function textTranslation() {
+  var key = "a1e5ae42f0474b3ba9f21184b43a80ec";                     //API key for translator from Azure
+  var endpoint = "https://api.cognitive.microsofttranslator.com/";  //Base URL of AZURE API
+  var location = "eastus";                                          //Assigns the region location
+  var path = '/translate';                                          //API endpoint that needs translated
+  var fromLanguage = 'en';                                          //sets languages to translate from
+  var toLanguages = ['en', 'fr', 'it', 'de', 'es'];                 ////sets languages to translate to
+  var textToTranslate = document.getElementById('textToTranslate').value; //pulls the value of textToTranslate that user wants to translate
 
-//   const fromLanguage = 'en';
-//   const toLanguages = ['en', 'fr', 'it', 'de', 'es'];
+  toLanguages.forEach(targetLanguage => {     //does a loop over the list of languages you want to convert
 
-//   const translationResultElement = document.getElementById('translationResult');
+      var params = new URLSearchParams({    //helps construct the query params we are using
+          'api-version': '3.0',
+          'from': fromLanguage,
+          'to': [targetLanguage]
+      });                                     //sets the variables of params and holds them for the requested translation
 
-//   // Loop through each target language
-//   toLanguages.forEach(targetLanguage => {
-//       const params = {
-//           'api-version': '3.0',
-//           'from': fromLanguage,
-//           'to': [targetLanguage]
-//       };
+      var headers = {
+          'Ocp-Apim-Subscription-Key': key,
+          'Ocp-Apim-Subscription-Region': location,
+          'Content-type': 'application/json',
+          'X-ClientTraceId': Date.now().toString()  //the Date.now()toString() timestamp is represented as a String 
+      };                                      //defines the sub key, region, content type and client trace ID HTTP headers
 
-//       const headers = {
-//           'Ocp-Apim-Subscription-Key': key,
-//           'Ocp-Apim-Subscription-Region': location,
-//           'Content-type': 'application/json',
-//           'X-ClientTraceId': Date.now().toString()
-//       };
+      var body = JSON.stringify([{ 'text': textToTranslate }]); //translaes the body to JSON format
 
-//       const textToTranslate = document.getElementById('textToTranslate').value;
-
-//       const body = [{
-//           'text': textToTranslate
-//       }];
-
-//       fetch(constructedUrl + '?' + new URLSearchParams(params), {
-//           method: 'POST',
-//           headers: headers,
-//           body: JSON.stringify(body)
-//       })
-//           .then(response => response.json())
-//           .then(data => {
-//               const translationResult = data[0].translations[0].text;
-
-//               // Append the target language and translation to the respective elements
-//               translationResultElement.innerHTML += '<p>${targetLanguage.toUpperCase()}: ${translationResult}</p>';
-//           })
-//           .catch(error => {
-//               console.error('Error:', error);
-//           });
-//           translationResultElement.innerHTML += '<br>';
-//   });
-// }
+      fetch(`${endpoint}${path}?${params}`, {
+          method: 'POST',
+          headers: headers,
+          body: body
+      })
+      .then(response => response.json())
+      .then(data => {
+          var translationResult = data[0].translations[0].text;
+          console.log(`${targetLanguage.toUpperCase()}: ${translationResult}`);
+          $('#translationBox').append(`<p>${targetLanguage.toUpperCase()}: ${translationResult}</p>`);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  });
+}
 
 
 
