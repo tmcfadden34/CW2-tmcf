@@ -113,7 +113,7 @@ function getMedia(){
 }
 
 
-function deleteMedia(id) {
+function deleteMedia() {
   $.ajax({
     url: removeMedia0 + id + removeMedia1,
     type: 'DELETE',
@@ -135,7 +135,7 @@ function editMedia(id){
 
   $.ajax({
     type: "PUT",
-    url: updateMedia0,
+    url: updateMedia0 + id + updateMedia1,
     data: updatedMediaInfo,
     contentType: 'application/json; charset=utf-8',
     success: function (data) {
