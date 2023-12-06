@@ -1,5 +1,6 @@
 // translator.js
 
+
 function translateText() {
     const key = "a1e5ae42f0474b3ba9f21184b43a80ec";
     const endpoint = "https://api.cognitive.microsofttranslator.com/";
@@ -44,6 +45,7 @@ function translateText() {
 
                 // Append the target language and translation to the respective elements
                 translationResultElement.innerHTML += `<p>${targetLanguage.toUpperCase()}: ${translationResult}</p>`;
+                
             })
             .catch(error => {
                 console.error('Error:', error);

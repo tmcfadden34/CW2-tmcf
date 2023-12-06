@@ -75,7 +75,14 @@ function submitNewAsset(){
   processData: false,
   type: 'POST',
   success: function(data){
-  } 
+    console.log('Adding media was successful!', data);
+    alert('Adding media was successful!'),
+    getMedia();
+  },
+  error: function(xhr, status, error) {
+    console.log('Adding media was unsuccessful', error);
+    alert('Adding media was unsuccessful');
+  }, 
  });
 
 }
@@ -135,12 +142,19 @@ function editMedia(id){
 
   $.ajax({
     type: "PUT",
+    cache: false,
     url: updateMedia0 + id + updateMedia1,
     data: updatedMediaInfo,
     contentType: 'application/json; charset=utf-8',
-    success: function (data) {
-      getUsersList();
-    }
+    success: function(data){
+      console.log('Media Update successful!', data);
+      alert('Media Update successful!'),
+      getMedia();
+    },
+    error: function(xhr, status, error) {
+      console.log('Media update unsuccessful', error);
+      alert('Media update unsuccessful');
+    },
   });
 }
 
@@ -176,7 +190,10 @@ $(document).ready(function() {
     
   }); 
 
-  
+  $("#translate").click(function(){
+
+    translateText();
+  })
 
 });
 
@@ -258,10 +275,18 @@ function editUser(userID) {
     type: "PUT",
     url: updateUser0 + userID + updateUser1,
     data: updatedUserInfo,
+    cache: false,
     contentType: 'application/json; charset=utf-8',
-    success: function (data) {
+    success: function(data){
+      console.log('User Update successful!', data);
+      alert('User Update successful!'),
       getUsersList();
-    }
+    },
+    error: function(xhr, status, error) {
+      console.log('User update unsuccessful', error);
+      alert('User update unsuccessful');
+    },
+    
   });
 }
 
@@ -277,8 +302,9 @@ function userLogin(){
     data: JSON.stringify(loginInfo),
     cache: false,
     contentType: 'application/json',
-    processData: false,
     type: 'POST',
+    processData: false,
+    
     success: function(data){
       console.log('Login successful', data);
       window.location.href = "index.html";
@@ -286,11 +312,62 @@ function userLogin(){
     },
     error: function(xhr, status, error) {
       console.log('Login failed', error);
-      alert("Login Failed")
-    }
-
+      alert("Login Failed");
+    },
   })
 }
+
+// function translateText() {
+//   const key = "a1e5ae42f0474b3ba9f21184b43a80ec";
+//   const endpoint = "https://api.cognitive.microsofttranslator.com/";
+//   const location = "eastus";
+//   const path = '/translate';
+//   const constructedUrl = endpoint + path;
+
+//   const fromLanguage = 'en';
+//   const toLanguages = ['en', 'fr', 'it', 'de', 'es'];
+
+//   const translationResultElement = document.getElementById('translationResult');
+
+//   // Loop through each target language
+//   toLanguages.forEach(targetLanguage => {
+//       const params = {
+//           'api-version': '3.0',
+//           'from': fromLanguage,
+//           'to': [targetLanguage]
+//       };
+
+//       const headers = {
+//           'Ocp-Apim-Subscription-Key': key,
+//           'Ocp-Apim-Subscription-Region': location,
+//           'Content-type': 'application/json',
+//           'X-ClientTraceId': Date.now().toString()
+//       };
+
+//       const textToTranslate = document.getElementById('textToTranslate').value;
+
+//       const body = [{
+//           'text': textToTranslate
+//       }];
+
+//       fetch(constructedUrl + '?' + new URLSearchParams(params), {
+//           method: 'POST',
+//           headers: headers,
+//           body: JSON.stringify(body)
+//       })
+//           .then(response => response.json())
+//           .then(data => {
+//               const translationResult = data[0].translations[0].text;
+
+//               // Append the target language and translation to the respective elements
+//               translationResultElement.innerHTML += '<p>${targetLanguage.toUpperCase()}: ${translationResult}</p>';
+//           })
+//           .catch(error => {
+//               console.error('Error:', error);
+//           });
+//           translationResultElement.innerHTML += '<br>';
+//   });
+// }
 
 
 
