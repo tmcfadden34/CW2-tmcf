@@ -176,6 +176,7 @@ function submitNewUser(){
   }).done(function (response) {
     getUsersList();
   });
+  
 }
 
 function getUsersList(){

@@ -7,7 +7,7 @@ function translateText() {
     const path = '/translate';
     const constructedUrl = endpoint + path;
 
-    const fromLanguage = ('en', 'fr', 'it', 'de', 'es');
+    const fromLanguage = 'en';
     const toLanguages = ['en', 'fr', 'it', 'de', 'es'];
 
     const translationResultElement = document.getElementById('translationResult');
