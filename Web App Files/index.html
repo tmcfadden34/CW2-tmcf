@@ -25,7 +25,7 @@
             <div class="col-8" style="text-align: center;">
               <a href="homepage.html">
                 <button>Return back to the Homepage!</button>
-            </a>
+              </a>
               <h3>Image Sharing Platform</h3>
             </div>
 
@@ -42,53 +42,76 @@
               <form style="font-size: 10pt;" id="newAssetForm">
                 <div class="mb-3">
                   <label for="FileName" class="form-label">File Name</label>
-                  <input type="text" class="form-control" id="FileName">
+                  <input type="text" class="form-control" id="FileName" required>
                 </div>
 
                 <div class="mb-3">
                   <label for="userID" class="form-label">User Id</label>
-                  <input type="string" class="form-control" id="userID">
+                  <input type="string" class="form-control" id="userID" required>
                 </div>
 
                 <div class="mb-3">
                   <label for="userName" class="form-label">User Name</label>
-                  <input type="text" class="form-control" id="userName">
+                  <input type="text" class="form-control" id="userName" required>
                 </div>
 
                 <div class="mb-3">
                   <label for="UpFile" class="form-label">File to Upload</label>
-                  <input type="file" class="form-control" id="UpFile">
+                  <input type="file" class="form-control" id="UpFile" required>
                 </div>
             
                 <button type="button" id="subNewForm" class="btn btn-primary">Submit</button> <br/><br/>
-                
               </form>
-            </div>
-            
+              <div class="col-8" style="text-align: left;" >
+                <div style="padding:5px;">
+                  <h4>Please click the view Images button if you wish to view images on the system.</h4>
 
+                  <button  id = "retMedias" type="button" class="btn btn-primary">View Media</button>
+                  <div id="MediaList">               
+                  </div>
+ 
+                </div>
+              </div>
+            </div>
             <div class="col-2"  ></div>
         </div>
 
         <!-- view Asset Area-->
-        <div class="row align-items-start">
-            <div class="col-2"  ></div>
+      <div class="row align-items-start">
+        <div class="col-2"  ></div>
 
-            <div class="col-8" style="text-align: left;" >
-              <div style="padding:5px;">
-                <button  id = "retMedias" type="button" class="btn btn-primary">View Media</button>
-              </div>
-
-              <div id="MediaList">
-                
-                <h4>Please click the view Images button if you wish to view images on the system.</h4>
-                
-              </div>
-              
+        <div class="col-8" style="text-align: left;" >
+          <form style="font-size: 10pt; border-bottom:1px solid #222222;">
+            <h4>Enter the information you want to update for an existing record in the form below:</h4>
+            <div class="mb-3">
+              <label for="editFileName" class="form-label">File Name</label>
+              <input type="text" class="form-control" id="editFileName">
             </div>
-
-            <div class="col-2"></div>
+      
+            <div class="mb-3">
+              <label for="userID" class="form-label">User ID</label>
+              <input type="string" class="form-control" id="edituserID">
+            </div>
+      
+            <div class="mb-3">
+              <label for="userName" class="form-label">User name</label>
+              <input type="text" class="form-control" id="edituserName">
+            </div>
+      
+            <div class="mb-3">
+              <label for="UpFile" class="form-label">File to Upload</label>
+              <input type="file" class="form-control" id="editUpFile">
+            </div>
+      
+            <button type="button" class="btn btn-warning" id="updMedia">Submit Edited Information</button> <br/><br/>
+            <p>After pressing "Submit Edited Information" click the "Update Media" button you want to update</p>
+            
+          </form>
         </div>
 
+        <div class="col-2"  ></div>
+    </div>
+    
     </div>
 
     <div  class="container">
@@ -98,7 +121,7 @@
           <div class="col-2"  ></div>
 
           <div class="col-8" style="text-align: center;">
-            <h3>User Tracker</h3>
+            <h3>User Feature</h3>
           </div>
 
           <div class="col-2"  ></div>
@@ -114,27 +137,37 @@
             <form style="font-size: 10pt;" id="newAssetForm">
               <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name">
+                <input type="text" class="form-control" id="name" required>
               </div>
 
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email">
+                <input type="text" class="form-control" id="email" required>
               </div>
 
               <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username">
+                <input type="text" class="form-control" id="username" required>
               </div>
 
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="text" class="form-control" id="password">
+                <input type="text" class="form-control" id="password" required>
               </div>
           
               <button type="button" id="subNewUser" class="btn btn-primary">Submit</button> <br/><br/>
               
             </form>
+
+            <div style="padding:5px;">
+              <h4>Please click the view Users button if you wish to view users on the system.</h4>
+
+              <button  id = "retUsers" type="button" class="btn btn-primary">View Users</button>
+              <div id="UserList">
+
+  
+              </div>
+            </div>
           </div>
 
           <div class="col-2"  ></div>
@@ -145,15 +178,32 @@
           <div class="col-2"  ></div>
 
           <div class="col-8" style="text-align: left;" >
-            <div style="padding:5px;">
-              <button  id = "retUsers" type="button" class="btn btn-primary">View Users</button>
-            </div>
-
-            <div id="UserList">
-
-              <h4>Please click the view Users button if you wish to view users on the system.</h4>
-
-            </div>
+            <form style="font-size: 10pt; border-bottom:1px solid #222222;">
+              <h4>Enter the information you want to update for an existing record in the form below:</h4>
+              <div class="mb-3">
+                <label for="editName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="editName">
+              </div>
+        
+              <div class="mb-3">
+                <label for="editEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="editEmail">
+              </div>
+        
+              <div class="mb-3">
+                <label for="editUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="editUsername">
+              </div>
+        
+              <div class="mb-3">
+                <label for="editPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="editPassword">
+              </div>
+        
+              <button type="button" class="btn btn-warning" id="updUser">Submit Edited Information</button> <br/><br/>
+              <p>After pressing "Submit Edited Information" click the "Update User" button you want to update</p>
+              
+            </form>
           </div>
 
           <div class="col-2"  ></div>

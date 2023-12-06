@@ -1,19 +1,24 @@
 //The URIs of the REST endpoint
 postMedia = "https://prod-49.eastus.logic.azure.com:443/workflows/97bc92545d164828b97c1a651ffb4f24/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=15ykK8nnyR9Z-COoaPcdfXqWcbSTJ42YrFadHfu36kw";
 retrieveAllMedia = "https://prod-00.eastus.logic.azure.com:443/workflows/437e21f4a81343ad8b0e48996796e105/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Tb5O5yYfT0JGAkCLOp-5uEN3viGZe-iq1Xpk7ZPo9_0";
-removeMedia = "https://prod-03.eastus.logic.azure.com/workflows/43f5e508cf50474f8e0ce80c18821e6e/triggers/manual/paths/invoke/api/v1/media/{id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HwnyShAkBW7qAtZIjfXc2KJKlPVgW91BkpHLGbiOgzg";
+removeMedia0 = "https://prod-03.eastus.logic.azure.com/workflows/43f5e508cf50474f8e0ce80c18821e6e/triggers/manual/paths/invoke/api/v1/media/";
+removeMedia1 = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HwnyShAkBW7qAtZIjfXc2KJKlPVgW91BkpHLGbiOgzg";
+updateMedia0 = "https://prod-83.eastus.logic.azure.com/workflows/b8788bc0331d467bb863762a94a66efc/triggers/manual/paths/invoke/api/v1/media/{id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OfCJAqUbVvkxmpt_48JHD3ejPTj7DaEOhWQXsLGYUOg";
+updateMedia1 = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OfCJAqUbVvkxmpt_48JHD3ejPTj7DaEOhWQXsLGYUOg"
 BLOB_ACCOUNT = "https://blobstoragetmcf.blob.core.windows.net";
 
 //The URIs of the REST endpoint
 retrieveAllUsers = "https://prod-24.eastus.logic.azure.com/workflows/7bd5d6501e70475cadda15c20ee953e9/triggers/manual/paths/invoke/rest/v1/users?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=I79IMg-llIS5JkoEKAl600Z6W2SjRYkHz7MZfs4MdSU";
 postNewUser = "https://prod-80.eastus.logic.azure.com/workflows/53f2aadc0c8c463fad10bfb1ad3931eb/triggers/manual/paths/invoke/rest/v1/assests?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cgvhF3ATNz3qzSQ59Kcm-Pmyp_6C_78dmJaRB2RkHag";
-updateUser = "https://prod-59.eastus.logic.azure.com/workflows/bdcd99b44fcb4d4b98259161ac7f1ad6/triggers/manual/paths/invoke/rest/v1/users/{id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=8m-mbA4ngX8a5BnwEGlJ_WVYQiRTzobRiQm2MXT6fsc"
+updateUser0 = "https://prod-59.eastus.logic.azure.com/workflows/bdcd99b44fcb4d4b98259161ac7f1ad6/triggers/manual/paths/invoke/rest/v1/users/";
+updateUser1 = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=8m-mbA4ngX8a5BnwEGlJ_WVYQiRTzobRiQm2MXT6fsc";
 removeUser0 = "https://prod-87.eastus.logic.azure.com/workflows/81aad7ce15a8452193137eb835b9a6a6/triggers/manual/paths/invoke/rest/v1/users/";
 removeUser1 = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=34WX4w-UGgNAI0fhAn79wtFbmAGvvj4ehQW1dD1FZxw";
+siteAccess = "https://prod-80.eastus.logic.azure.com:443/workflows/6640491629984579ab252bfc0f67b800/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4WF8BPqvfcxcGLKJnXM2US37qg7i8QAOGU06RVsFt8I";
 
 
 
-//Handlers for button clicks
+//Handlers for media button clicks
 $(document).ready(function() {
 
  
@@ -39,6 +44,11 @@ $(document).ready(function() {
     
   });
 
+
+  $("updMedia").click(function(){
+
+    editMedia();
+  })
   
 
 
@@ -65,8 +75,7 @@ function submitNewAsset(){
   processData: false,
   type: 'POST',
   success: function(data){
-
-  }
+  } 
  });
 
 }
@@ -87,7 +96,8 @@ function getMedia(){
       items.push("<img src='"+ BLOB_ACCOUNT + val["filePath"] +"' width='400'/><br/>");
       items.push( "File : " + val["fileName"] + "<br />");
       items.push( "Uploaded by: " + val["userName"] + " (user id: "+val["userID"]+")<br/>");
-      items.push(`<button type="button" class="btn btn-danger" onclick="deleteMedia(${val["id"]})">Delete</button><br/><br/>`);
+      items.push( '<button type="button" class="btn btn-danger" onclick="deleteMedia('+val["id"]+')">Delete</button>  <br/><br/>');
+      items.push( '<button type="button" class="btn btn-warning" onclick="editMedia('+val["id"]+')">Edit</button>  <br/><br/>');
       items.push( "<hr />");
       
     });
@@ -103,24 +113,37 @@ function getMedia(){
 }
 
 
-
 function deleteMedia(id) {
   $.ajax({
-    url: `${removeMediaBase}${id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HwnyShAkBW7qAtZIjfXc2KJKlPVgW91BkpHLGbiOgzg`,
+    url: removeMedia0 + id + removeMedia1,
     type: 'DELETE',
-    success: function (data) {
-      // Handle the success response
-      console.log('Media deleted successfully:', data);
+  }).done(function(msg) {
+    getMedia();
+  });
+}
 
-      // After successful deletion, you may want to remove the media from the UI
-      getMedia();
-    },
-    error: function (error) {
-      // Handle the error response
-      console.error('Error deleting media:', error);
+function editMedia(id){
+  var updatedMediaInfo = {
+    FileName: $('#editFileName').val(),
+    userID: $('#edituserID').val(),
+    userName: $('#edituserName').val(),
+    UpFile: $('#editUpFile').val()
+  };
+
+  // Convert to a JSON String
+  updatedUserInfo = JSON.stringify(updatedUserInfo);
+
+  $.ajax({
+    type: "PUT",
+    url: updateMedia0,
+    data: updatedMediaInfo,
+    contentType: 'application/json; charset=utf-8',
+    success: function (data) {
+      getUsersList();
     }
   });
 }
+
 
 //Handlers for button clicks
 $(document).ready(function() {
@@ -141,6 +164,11 @@ $(document).ready(function() {
     
   }); 
 
+  $("updUser").click(function(){
+
+    editUser();
+  })
+
   $("#login").click(function(){
 
     //Execute the submit new asset function
@@ -148,7 +176,7 @@ $(document).ready(function() {
     
   }); 
 
-
+  
 
 });
 
@@ -192,8 +220,8 @@ function getUsersList(){
       items.push( "Email: " + val["email"] + "<br/>");
       items.push( "Username: " + val["username"] + "<br/>");
       items.push( "Password: " + val["password"] + "<br/>");
-      items.push('<button type="button" class="btn btn-danger" onclick="deleteUser('+val["userID"]+')">Delete</button> <br/><br/>'); 
-      items.push('<button type="button" class="btn btn-warning" onclick="editUser('+val["userID"]+')">Edit</button> <br/><br/>'); 
+      items.push( '<button type="button" class="btn btn-danger" onclick="deleteUser('+val["userID"]+')">Delete</button> <br/><br/>'); 
+      items.push( '<button type="button" class="btn btn-warning" onclick="editUser('+val["userID"]+')">Update</button> <br/><br/>'); 
 
     });
 
@@ -209,44 +237,40 @@ function getUsersList(){
 function deleteUser(userID){
   $.ajax({
     type: "DELETE",
-    //Note the need to concatenate the
     url: removeUser0 + userID + removeUser1,
   }).done(function( msg ) {
-    //On success, update the assetlist.
     getUsersList();
   });
 }
 
 function editUser(userID) {
+  var updatedUserInfo = {
+    name: $('#editName').val(),
+    email: $('#editEmail').val(),
+    username: $('#editUsername').val(),
+    password: $('#editPassword').val()
+  };
 
-  var subObj = { 
-    //Construct JSON Object for new item
-      name: $('#name').val(),
-      email: $('#email').val(),
-      username: $('#username').val(),
-      password: $('#password').val()
-    }
-    //Convert to a JSON String
-    subObj = JSON.stringify(subObj);
+  // Convert to a JSON String
+  updatedUserInfo = JSON.stringify(updatedUserInfo);
 
-    $.ajax({
-      type: "PUT",
-      url: updateUser + userID + removeUser1,
-    }).done(function( msg ) {
+  $.ajax({
+    type: "PUT",
+    url: updateUser0 + userID + updateUser1,
+    data: updatedUserInfo,
+    contentType: 'application/json; charset=utf-8',
+    success: function (data) {
       getUsersList();
-    });
-
-    
+    }
+  });
 }
 
-function userLogin(){
 
+function userLogin(){
   var loginInfo = {
     username: $('#username').val(),
     password: $('#password').val()
   }
-
-  siteAccess = "https://prod-80.eastus.logic.azure.com:443/workflows/6640491629984579ab252bfc0f67b800/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4WF8BPqvfcxcGLKJnXM2US37qg7i8QAOGU06RVsFt8I";
 
   $.ajax ({
     url: siteAccess,
@@ -256,13 +280,11 @@ function userLogin(){
     processData: false,
     type: 'POST',
     success: function(data){
-      // Handle success as needed
       console.log('Login successful', data);
       window.location.href = "index.html";
       alert("Login was successful")
     },
     error: function(xhr, status, error) {
-      // Handle error as needed
       console.log('Login failed', error);
       alert("Login Failed")
     }
