@@ -1,9 +1,9 @@
 //The URIs of the REST endpoints related to media
 postMedia = "https://prod-49.eastus.logic.azure.com:443/workflows/97bc92545d164828b97c1a651ffb4f24/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=15ykK8nnyR9Z-COoaPcdfXqWcbSTJ42YrFadHfu36kw";
 retrieveAllMedia = "https://prod-00.eastus.logic.azure.com:443/workflows/437e21f4a81343ad8b0e48996796e105/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Tb5O5yYfT0JGAkCLOp-5uEN3viGZe-iq1Xpk7ZPo9_0";
-removeMedia = "https://prod-03.eastus.logic.azure.com/workflows/43f5e508cf50474f8e0ce80c18821e6e/triggers/manual/paths/invoke/rest/v1/media/{blobName}/{id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HwnyShAkBW7qAtZIjfXc2KJKlPVgW91BkpHLGbiOgzg"
-removeMedia0 = "https://prod-03.eastus.logic.azure.com/workflows/43f5e508cf50474f8e0ce80c18821e6e/triggers/manual/paths/invoke/rest/v1/media/";
-removeMedia1 = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HwnyShAkBW7qAtZIjfXc2KJKlPVgW91BkpHLGbiOgzg";
+removeMedia = "https://prod-49.eastus.logic.azure.com/workflows/97bc92545d164828b97c1a651ffb4f24/triggers/manual/paths/invoke/rest/v1/media/{blobName}/{id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=15ykK8nnyR9Z-COoaPcdfXqWcbSTJ42YrFadHfu36kw";
+removeMedia0 = "https://prod-49.eastus.logic.azure.com:443/workflows/97bc92545d164828b97c1a651ffb4f24/triggers/manual/paths/invoke/media";
+removeMedia1 = "api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=15ykK8nnyR9Z-COoaPcdfXqWcbSTJ42YrFadHfu36kw";
 updateMedia0 = "https://prod-83.eastus.logic.azure.com/workflows/b8788bc0331d467bb863762a94a66efc/triggers/manual/paths/invoke/api/v1/media/{id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OfCJAqUbVvkxmpt_48JHD3ejPTj7DaEOhWQXsLGYUOg";
 updateMedia1 = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OfCJAqUbVvkxmpt_48JHD3ejPTj7DaEOhWQXsLGYUOg"
 BLOB_ACCOUNT = "https://blobstoragetmcf.blob.core.windows.net";
@@ -101,8 +101,8 @@ function getMedia(){
       items.push("<img src='"+ BLOB_ACCOUNT + val["filePath"] +"' width='400'/><br/>");
       items.push( "File : " + val["fileName"] + "<br />");
       items.push( "Uploaded by: " + val["userName"] + " (user id: "+val["userID"]+")<br/>");
-      items.push('<button type="button" class="btn btn-danger" onclick="deleteMedia(' + val["blobName"] + val["id"] + ')">Delete</button>  <br/><br/>');
-      items.push( '<button type="button" class="btn btn-warning" onclick="editMedia('+val["id"]+')">Edit</button>  <br/><br/>');
+      items.push( "<button type='button' class='btn btn-danger' id='delMedia' onclick='deleteMedia(" +  JSON.stringify(val["blobName"]) + "," + JSON.stringify(val["id"]) +")'>Delete</button><br/><br/>")      
+      items.push( "<button type='button' class='btn btn-warning' onclick='editMedia("+val["id"]+")'>Edit</button>  <br/><br/>")
       items.push( "<hr />");
       //pushes information to the user 
     });
@@ -119,8 +119,9 @@ function getMedia(){
 
 
 function deleteMedia(blobName, id) {
+
   $.ajax({                                  //construction to make a request to the http request
-    url: removeMedia0 + blobName + id + removeMedia1,  //url construction
+    url: removeMedia0 + blobName + "/" + id + removeMedia1,  //url construction
     type: 'DELETE',                         //type of callback
   }).done(function(msg) {                   
     getMedia();
